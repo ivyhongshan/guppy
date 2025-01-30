@@ -16,6 +16,7 @@ import middlewares from './middlewares';
 import headerParser from './utils/headerParser';
 import getAuthHelperInstance from './auth/authHelper';
 import downloadRouter from './download';
+import anagineRouter from './anagine';
 import CodedError from './utils/error';
 import { statusRouter, versionRouter } from './endpoints';
 
@@ -87,6 +88,16 @@ const startServer = async () => {
       }
     },
   );
+
+  app.get('/anagine', anagineRouter, (req, res, err, next) => {
+    if (err instanceof CodedError) {
+      // deepcode ignore ServerLeak: no important information exists in error
+      res.status(err.code).send(err.msg);
+    } else {
+      // deepcode ignore ServerLeak: no important information exists in error
+      res.status(500).send(err);
+    }
+  });
 
   app.listen(config.port, () => {
     log.info(`[Server] guppy listening on port ${config.port}!`);
