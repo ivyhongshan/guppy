@@ -302,7 +302,6 @@ class GuppyWrapper extends React.Component {
       this.state.accessibility,
       this.props.csrfToken,
     ).then((res) => {
-      console.log("Hellow World from Gpuuy side");
       if (!res || !res.data) {
         throw new Error(`Error getting raw ${this.props.guppyConfig.type} data from Guppy server ${this.props.guppyConfig.path}.`);
       }
